@@ -12,9 +12,10 @@ Most questions are answered by the documentation for the package you are using:
 Each repository also has an `examples/` directory of runnable scripts, which is
 usually the fastest route to a working program.
 
-If you need a MIB module, look in the archive at
-[pysnmp.github.io/mibs/asn1/](https://pysnmp.github.io/mibs/asn1/) before
-hunting for it elsewhere.
+If you need a MIB module, look in the distribution at
+[pysnmp.github.io/mibs/](https://pysnmp.github.io/mibs/) before hunting for it
+elsewhere -- it is served over HTTPS, shipped as an archive and published as
+OCI images.
 
 ## Asking a question
 
