@@ -13,7 +13,7 @@ layers underneath; pysnmp reaches them for you.
 | Project | Install | Documentation | What it is |
 | --- | --- | --- | --- |
 | [pysnmp](https://github.com/pysnmp/pysnmp) | `pip install pysnmplib` | [docs](https://pysnmp.github.io/pysnmp/) | The engine. SNMP v1, v2c and v3 as manager, agent or proxy, on asyncio. |
-| [mibs](https://github.com/pysnmp/mibs) | served, not installed | [docs](https://pysnmp.github.io/mibs/asn1/) | The MIB distribution -- what lets an engine say ifOperStatus rather than .1.8.1. |
+| [mibs](https://github.com/pysnmp/mibs) | live over HTTPS, or installed locally | [docs](https://pysnmp.github.io/mibs/asn1/) | The MIB distribution -- what lets an engine say ifOperStatus rather than .1.8.1. |
 | [pysmi](https://github.com/pysnmp/pysmi) | `pip install pysnmp-pysmi` | [docs](https://pysnmp.github.io/pysmi/) | The MIB compiler. ASN.1 sources into pysnmp modules or JSON; comes with the compile extra. |
 | [pyasn1](https://github.com/pysnmp/pyasn1) | `pip install pysnmp-pyasn1` | [docs](https://pysnmp.github.io/pyasn1/) | The codec. ASN.1 types with BER, CER and DER, underneath both of the above. |
 <!-- END PROJECTS -->
@@ -64,9 +64,9 @@ and on the [documentation site](https://pysnmp.github.io/pysnmp/).
 authentication and privacy, VACM access control, the transport dispatcher, and
 the high-level API above all of it.
 
-**mibs** supplies the module definitions. It is a distribution rather than a
-package -- served over HTTPS, shipped as an archive, published as OCI images --
-and it is what turns `.1.3.6.1.2.1.2.2.1.8.1 = 2` into
+**mibs** supplies the module definitions. It is a distribution, though not one
+pip resolves: use it live over HTTPS, or install it locally from the archive or
+an OCI image. It is what turns `.1.3.6.1.2.1.2.2.1.8.1 = 2` into
 `IF-MIB::ifOperStatus.1 = down`. Optional: an engine starts without it, on the
 standard modules pysnmp ships.
 

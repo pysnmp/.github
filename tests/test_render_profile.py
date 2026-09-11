@@ -45,9 +45,9 @@ def test_a_released_project_installs_without_pre():
 
 
 def test_an_explicit_install_note_wins_over_the_pip_command():
-    """The MIB distribution is served, not installed; "--" undersells it."""
-    assert project(install="served, not installed").install_cell == (
-        "served, not installed"
+    """The MIB distribution is installable, just not by pip; "--" undersells it."""
+    assert project(install="live over HTTPS, or installed locally").install_cell == (
+        "live over HTTPS, or installed locally"
     )
 
 
