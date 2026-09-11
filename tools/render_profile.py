@@ -57,8 +57,8 @@ class Project:
         package.
     install
         What the Install cell should say, when a pip command is the wrong
-        answer. The MIB distribution is served, unpacked or mounted rather
-        than installed, and "--" undersells that.
+        answer. The MIB distribution is installable, just not by pip: you use
+        it live over HTTPS or install it locally, and "--" undersells that.
     prerelease
         Whether the maintained line is still a release candidate, which makes
         the install command need ``--pre``. Nothing sets it today; it is kept
