@@ -24,7 +24,7 @@ repo = "pysnmp/mibs"
 # it locally from the archive or an OCI image. `install` overrides the pip
 # command the table would otherwise build from `distribution`.
 install = "live over HTTPS, or installed locally"
-docs = "https://pysnmp.github.io/mibs/asn1/"
+docs = "https://pysnmp.github.io/mibs.html"
 summary = "The MIB distribution -- what lets an engine say ifOperStatus rather than .1.8.1."
 
 [[project]]
