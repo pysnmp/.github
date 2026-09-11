@@ -82,13 +82,26 @@ def test_splice_is_idempotent():
         "no markers at all",
         f"{BEGIN}\nunterminated\n",
         f"{END}\nbackwards\n{BEGIN}\n",
+        f"{DOCUMENT}{DOCUMENT}",
+        f"{BEGIN}\n{BEGIN}\nstale\n{END}\n",
     ],
-    ids=["absent", "unterminated", "out-of-order"],
+    ids=["absent", "unterminated", "out-of-order", "two-pairs", "two-begins"],
 )
 def test_splice_refuses_a_document_it_cannot_locate_the_region_in(document):
     """Better to fail than to rewrite a file and drop what was around it."""
     with pytest.raises(ValueError, match="must contain"):
         splice(document, "TABLE")
+
+
+def test_a_second_marker_pair_is_refused_rather_than_left_stale():
+    """The case that would otherwise pass --check while publishing a stale table.
+
+    Splicing only the first pair leaves the second one holding whatever it
+    held before, and the next --check compares the region it already fixed and
+    reports success. Refusing outright is the only answer that cannot lie.
+    """
+    with pytest.raises(ValueError, match="exactly one"):
+        splice(f"{DOCUMENT}{DOCUMENT}", "TABLE")
 
 
 def test_committed_projects_file_parses_and_is_not_empty():

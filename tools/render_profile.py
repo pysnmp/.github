@@ -109,16 +109,26 @@ def splice(document: str, table: str) -> str:
     Raises
     ------
     ValueError
-        If the markers are missing or out of order. Rewriting a file whose
-        generated region cannot be located would silently drop the prose
-        around it, so this stops instead.
+        If the markers are missing, out of order, or repeated. Rewriting a
+        file whose generated region cannot be located unambiguously would
+        silently drop the prose around it, so this stops instead.
     """
-    start = document.find(BEGIN)
-    end = document.find(END)
-
-    if start < 0 or end < 0 or end < start:
+    # Exactly one of each. A second pair is the dangerous case rather than the
+    # obviously broken one: rewriting the first and leaving the second would
+    # publish a stale table, and `--check` would then pass on a profile that
+    # contradicts itself, because the region it compares is already correct.
+    if document.count(BEGIN) != 1 or document.count(END) != 1:
         raise ValueError(
-            f"{PROFILE} must contain {BEGIN} followed by {END}; "
+            f"{PROFILE} must contain exactly one {BEGIN} and one {END}; "
+            f"found {document.count(BEGIN)} and {document.count(END)}"
+        )
+
+    start = document.index(BEGIN)
+    end = document.index(END)
+
+    if end < start:
+        raise ValueError(
+            f"{PROFILE} must contain {BEGIN} before {END}; "
             "the generated table goes between them"
         )
 

@@ -9,6 +9,9 @@ contact_links:
   - name: Report a security vulnerability
     url: https://github.com/pysnmp/.github/blob/main/SECURITY.md
     about: Privately, through a security advisory -- never as a public issue.
+  - name: Getting help
+    url: https://github.com/pysnmp/.github/blob/main/SUPPORT.md
+    about: What to include in a question, and what is in scope here.
   - name: MIB archive
     url: https://pysnmp.github.io/mibs/asn1/
     about: Looking for a MIB module? Check here before opening an issue.

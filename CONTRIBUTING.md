@@ -96,6 +96,14 @@ so a message that passes locally passes in CI.
 
 ## Branches and releases
 
+This section describes the three repositories that publish a package --
+[pysnmp](https://github.com/pysnmp/pysnmp), [pysmi](https://github.com/pysnmp/pysmi)
+and [pyasn1](https://github.com/pysnmp/pyasn1). The two that publish nothing,
+[.github](https://github.com/pysnmp/.github) and
+[pysnmp.github.io](https://github.com/pysnmp/pysnmp.github.io), have only
+`main`: there is no release to stage, so there is nothing for a second
+long-lived branch to hold. Open pull requests against `main` there.
+
 - `main` is the released line. `next` is where work integrates.
 - Open your pull request against `next` unless you are fixing something that is
   broken on `main` right now.

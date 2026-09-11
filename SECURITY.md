@@ -16,9 +16,15 @@ repository the problem is in:
 If you are not sure which one, report it against
 [pysnmp](https://github.com/pysnmp/pysnmp/security/advisories/new) and say so.
 
-Please do not open a public issue, a pull request or a discussion for a
-vulnerability. A report that arrives in public is already disclosed, which
-takes the choice of timing away from everyone using the library.
+If a repository's Security tab offers no "Report a vulnerability" button, the
+feature is not switched on there yet. In that case open a public issue that
+says only that you have a security report and asks for a private channel --
+no versions, no reproduction, no description of the flaw -- and a maintainer
+will open an advisory and invite you to it.
+
+Otherwise, please do not open a public issue, a pull request or a discussion
+for a vulnerability. A report that arrives in public is already disclosed,
+which takes the choice of timing away from everyone using the library.
 
 Useful reports include the version you tested, the smallest input or
 configuration that reproduces the problem, and what an attacker gets out of it.
