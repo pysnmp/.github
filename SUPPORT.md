@@ -29,7 +29,10 @@ template. Include:
   `net-snmp`, or another pysnmp process.
 
 For a device that answers some requests and not others, a packet capture is
-worth more than any description of it.
+worth more than any description of it -- redacted first. An issue is public and
+SNMPv1 and SNMPv2c carry the community string in cleartext, so an unedited
+capture of either publishes a password. Strip community strings, USM
+passphrases and addresses, and prefer decoded output to raw bytes.
 
 ## What we can and cannot help with
 

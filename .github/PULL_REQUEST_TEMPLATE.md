@@ -1,13 +1,16 @@
 <!--
-The title of this pull request becomes a commit message on `next`, so it has to
-parse as a Conventional Commit:
+The title of this pull request becomes a commit message, so it has to parse as
+a Conventional Commit:
 
     fix(smi): resolve a symbol imported through two MIB modules
     feat: SHA-384 and SHA-512 USM authentication protocols
     docs: correct the transport target example in the quick start
 
 Types: build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test.
-A `!` after the type, or a `BREAKING CHANGE:` footer, cuts a major release.
+A `!` after the type, or a `BREAKING CHANGE:` footer, marks a breaking change.
+In the repositories that publish a package, semantic-release reads all of this
+to compute the next version and write the notes; in the others it is simply an
+accurate description of what changed.
 -->
 
 ## What this changes

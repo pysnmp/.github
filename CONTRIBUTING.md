@@ -17,6 +17,11 @@ its `uv.lock`. Install uv, then:
 $ git clone https://github.com/pysnmp/<repository>.git
 $ cd <repository>
 $ uv sync --locked
+```
+
+Where the repository has a test suite, run it:
+
+```console
 $ uv run --locked --group dev pytest
 ```
 
@@ -37,16 +42,16 @@ it is still a retype rather than a rebase.
 
 ## Before you open a pull request
 
-The same three things CI will run:
+What CI will run, everywhere:
 
 ```console
 $ uv run ruff check .
 $ uv run ruff format --check .
-$ uv run --locked --group dev pytest
 ```
 
-Repositories that ship type annotations also run `uv run mypy`, and those with
-a documentation build run:
+Then whatever the repository actually has: `uv run --locked --group dev pytest`
+where there is a test suite, `uv run mypy` where there are type annotations to
+check, and where there is a documentation build:
 
 ```console
 $ uv run --locked --group dev sphinx-build -n -W --keep-going -b html docs/source docs/build

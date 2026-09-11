@@ -66,6 +66,15 @@ Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement by contacting an
 organization owner listed at
 [github.com/orgs/pysnmp/people](https://github.com/orgs/pysnmp/people).
+
+That page is not always a route you can use. GitHub shows the member list
+according to your role, so someone outside the organization may not be able to
+identify an owner from it at all -- and if your report is about an owner, being
+asked to take it to one is not a channel either. In either case, report through
+[GitHub's abuse reporting form](https://github.com/contact/report-abuse),
+which is private, reaches GitHub's own staff rather than anyone here, and works
+regardless of how this organization is configured.
+
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the

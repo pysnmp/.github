@@ -39,6 +39,15 @@ body:
       description: >
         The traceback in full, or the packet capture, or both. Do not trim the
         middle of a traceback; that is usually where the answer is.
+
+
+        Redact before you paste. This issue is public, and SNMPv1 and SNMPv2c
+        put the community string on the wire in cleartext -- a capture of them
+        is a capture of your password. Take out community strings, USM
+        passphrases, device addresses and anything the payload says about your
+        network. Decoded and sanitised output is more use to us than a raw
+        capture anyway. If you cannot redact it and still show the bug, say so
+        and we will find a private channel.
       render: shell
     validations:
       required: true
