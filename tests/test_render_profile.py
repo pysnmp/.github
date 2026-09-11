@@ -34,6 +34,16 @@ def test_row_links_repo_and_names_the_distribution():
     assert "`pip install pysnmplib`" in row
 
 
+def test_a_prerelease_project_installs_with_pre():
+    """Without --pre, pip resolves the last GA -- not what the site documents."""
+    assert project(prerelease=True).install == "`pip install --pre pysnmplib`"
+
+
+def test_a_released_project_installs_without_pre():
+    """--pre on a GA line would opt a reader into prereleases for no reason."""
+    assert project().install == "`pip install pysnmplib`"
+
+
 def test_row_of_an_unpackaged_project_has_no_pip_command():
     """The MIB archive is a website; offering to pip install it would lie."""
     row = project(name="mibs", repo="pysnmp/mibs", distribution=None).row()

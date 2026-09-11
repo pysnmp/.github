@@ -12,6 +12,12 @@
 name = "pysnmp"
 repo = "pysnmp/pysnmp"
 distribution = "pysnmplib"
+# 6.0 is the maintained line and it is still a release candidate, so the install
+# command has to carry --pre. A plain `pip install pysnmplib` resolves 5.0.24,
+# whose pysnmp-pyasn1 requirement predates the current releases of that package
+# and which fails to import against the one it pulls in. Drop this once 6.0 is
+# generally available.
+prerelease = true
 docs = "https://pysnmp.github.io/pysnmp/"
 summary = "SNMP v1/v2c/v3 engine -- manager, agent and proxy, asyncio throughout."
 

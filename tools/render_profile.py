@@ -55,6 +55,10 @@ class Project:
     distribution
         The name on PyPI, or ``None`` for a repository that publishes no
         package -- the MIB archive is a website, not a distribution.
+    prerelease
+        Whether the maintained line is still a release candidate. When it is,
+        the install command needs ``--pre``: without it pip resolves the last
+        general release, which is not the version anything here describes.
     """
 
     name: str
@@ -62,18 +66,27 @@ class Project:
     summary: str
     docs: str
     distribution: str | None = None
+    prerelease: bool = False
 
     @property
     def url(self) -> str:
         """The repository's page on GitHub."""
         return f"https://github.com/{self.repo}"
 
+    @property
+    def install(self) -> str:
+        """The pip command that installs the version this site documents."""
+        if not self.distribution:
+            return "--"
+
+        pre = "--pre " if self.prerelease else ""
+        return f"`pip install {pre}{self.distribution}`"
+
     def row(self) -> str:
         """The project as one row of the generated Markdown table."""
-        install = f"`pip install {self.distribution}`" if self.distribution else "--"
         return (
             f"| [{self.name}]({self.url}) "
-            f"| {install} "
+            f"| {self.install} "
             f"| [docs]({self.docs}) "
             f"| {self.summary} |"
         )

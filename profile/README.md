@@ -10,7 +10,7 @@ down, on Python 3.10 and later.
 <!-- BEGIN PROJECTS -->
 | Project | Install | Documentation | What it is |
 | --- | --- | --- | --- |
-| [pysnmp](https://github.com/pysnmp/pysnmp) | `pip install pysnmplib` | [docs](https://pysnmp.github.io/pysnmp/) | SNMP v1/v2c/v3 engine -- manager, agent and proxy, asyncio throughout. |
+| [pysnmp](https://github.com/pysnmp/pysnmp) | `pip install --pre pysnmplib` | [docs](https://pysnmp.github.io/pysnmp/) | SNMP v1/v2c/v3 engine -- manager, agent and proxy, asyncio throughout. |
 | [pysmi](https://github.com/pysnmp/pysmi) | `pip install pysnmp-pysmi` | [docs](https://pysnmp.github.io/pysmi/) | MIB compiler: ASN.1 SMIv1/SMIv2 sources into pysnmp modules or JSON. |
 | [pyasn1](https://github.com/pysnmp/pyasn1) | `pip install pysnmp-pyasn1` | [docs](https://pysnmp.github.io/pyasn1/) | ASN.1 types and BER/CER/DER codecs -- what the other two are built on. |
 | [mibs](https://github.com/pysnmp/mibs) | -- | [docs](https://pysnmp.github.io/mibs/asn1/) | The MIB archive pysmi and pysnmp fetch from when a module is not on disk. |
@@ -19,8 +19,14 @@ down, on Python 3.10 and later.
 ## Start here
 
 ```console
-$ pip install pysnmplib
+$ pip install --pre pysnmplib
 ```
+
+`--pre` is not decoration. pysnmp 6.0 is in release candidate and is the line
+being maintained; a plain `pip install pysnmplib` resolves 5.0.24, whose
+`pysnmp-pyasn1` requirement predates the current releases of that package and
+which fails to import against the one it pulls in. Drop the flag once 6.0 is
+generally available.
 
 ```python
 import asyncio
@@ -66,9 +72,9 @@ there are three layers and they are three repositories:
   on disk, served over HTTPS at
   [pysnmp.github.io/mibs/asn1/](https://pysnmp.github.io/mibs/asn1/).
 
-pysnmp ships the standard modules its engine resolves at start-up, so a plain
-`pip install pysnmplib` needs neither pysmi nor the archive. Compiling vendor
-MIBs at run time is the extra: `pip install 'pysnmplib[compile]'`.
+pysnmp ships the standard modules its engine resolves at start-up, so an
+engine starts with neither pysmi nor the archive present. Compiling vendor
+MIBs at run time is the extra: `pip install --pre 'pysnmplib[compile]'`.
 
 ## How we work
 
