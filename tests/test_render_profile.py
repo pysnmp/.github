@@ -36,12 +36,19 @@ def test_row_links_repo_and_names_the_distribution():
 
 def test_a_prerelease_project_installs_with_pre():
     """Without --pre, pip resolves the last GA -- not what the site documents."""
-    assert project(prerelease=True).install == "`pip install --pre pysnmplib`"
+    assert project(prerelease=True).install_cell == "`pip install --pre pysnmplib`"
 
 
 def test_a_released_project_installs_without_pre():
     """--pre on a GA line would opt a reader into prereleases for no reason."""
-    assert project().install == "`pip install pysnmplib`"
+    assert project().install_cell == "`pip install pysnmplib`"
+
+
+def test_an_explicit_install_note_wins_over_the_pip_command():
+    """The MIB distribution is served, not installed; "--" undersells it."""
+    assert project(install="served, not installed").install_cell == (
+        "served, not installed"
+    )
 
 
 def test_row_of_an_unpackaged_project_has_no_pip_command():

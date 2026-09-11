@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
-          python-version: "3.13"
+          python-version: "3.14"
       - uses: actions/cache@v6
         with:
           path: ~/.cache/pre-commit
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
-          python-version: "3.13"
+          python-version: "3.14"
       - name: Install UV
         uses: astral-sh/setup-uv@v7
         with:
@@ -58,7 +58,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
-          python-version: "3.13"
+          python-version: "3.14"
       - name: Install UV
         uses: astral-sh/setup-uv@v7
         with:
@@ -73,7 +73,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
-          python-version: "3.13"
+          python-version: "3.14"
       # No dependencies: the renderer is stdlib only, on purpose, so this job
       # is the same check a contributor can run with nothing installed.
       - name: Check profile/README.md against projects.toml

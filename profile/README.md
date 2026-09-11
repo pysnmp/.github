@@ -1,32 +1,33 @@
 # pysnmp
 
-**Pure-Python SNMP, from the wire up. Brewing free software for the greater good.**
+**Pure-Python SNMP. Brewing free software for the greater good.**
 
-This organization maintains the Python SNMP stack: an SNMP engine, the MIB
-compiler that feeds it, the ASN.1 codec underneath both, and the MIB archive
-they read from. No C extensions, no Net-SNMP bindings -- Python all the way
-down, on Python 3.10 and later.
+An engine that speaks SNMP v1, v2c and v3, and a MIB distribution that lets it
+talk about managed objects by name instead of by number. No C extensions and
+no Net-SNMP bindings -- Python all the way down, on Python 3.10 and later.
+
+**pysnmp** and **mibs** are what you use. **pysmi** and **pyasn1** are the
+layers underneath; pysnmp reaches them for you.
 
 <!-- BEGIN PROJECTS -->
 | Project | Install | Documentation | What it is |
 | --- | --- | --- | --- |
-| [pysnmp](https://github.com/pysnmp/pysnmp) | `pip install --pre pysnmplib` | [docs](https://pysnmp.github.io/pysnmp/) | SNMP v1/v2c/v3 engine -- manager, agent and proxy, asyncio throughout. |
-| [pysmi](https://github.com/pysnmp/pysmi) | `pip install pysnmp-pysmi` | [docs](https://pysnmp.github.io/pysmi/) | MIB compiler: ASN.1 SMIv1/SMIv2 sources into pysnmp modules or JSON. |
-| [pyasn1](https://github.com/pysnmp/pyasn1) | `pip install pysnmp-pyasn1` | [docs](https://pysnmp.github.io/pyasn1/) | ASN.1 types and BER/CER/DER codecs -- what the other two are built on. |
-| [mibs](https://github.com/pysnmp/mibs) | -- | [docs](https://pysnmp.github.io/mibs/asn1/) | The MIB archive pysmi and pysnmp fetch from when a module is not on disk. |
+| [pysnmp](https://github.com/pysnmp/pysnmp) | `pip install pysnmplib` | [docs](https://pysnmp.github.io/pysnmp/) | The engine. SNMP v1, v2c and v3 as manager, agent or proxy, on asyncio. |
+| [mibs](https://github.com/pysnmp/mibs) | served, not installed | [docs](https://pysnmp.github.io/mibs/asn1/) | The MIB distribution -- what lets an engine say ifOperStatus rather than .1.8.1. |
+| [pysmi](https://github.com/pysnmp/pysmi) | `pip install pysnmp-pysmi` | [docs](https://pysnmp.github.io/pysmi/) | The MIB compiler. ASN.1 sources into pysnmp modules or JSON; comes with the compile extra. |
+| [pyasn1](https://github.com/pysnmp/pyasn1) | `pip install pysnmp-pyasn1` | [docs](https://pysnmp.github.io/pyasn1/) | The codec. ASN.1 types with BER, CER and DER, underneath both of the above. |
 <!-- END PROJECTS -->
 
 ## Start here
 
 ```console
-$ pip install --pre pysnmplib
+$ pip install 'pysnmplib[compile]'
 ```
 
-`--pre` is not decoration. pysnmp 6.0 is in release candidate and is the line
-being maintained; a plain `pip install pysnmplib` resolves 5.0.24, whose
-`pysnmp-pyasn1` requirement predates the current releases of that package and
-which fails to import against the one it pulls in. Drop the flag once 6.0 is
-generally available.
+The `compile` extra pulls in pysmi, the MIB compiler. Without it pysnmp still
+speaks SNMP -- it ships the standard modules an engine resolves at start-up --
+but it cannot read a MIB it does not already have, and reading those is most of
+what makes SNMP legible.
 
 ```python
 import asyncio
@@ -59,22 +60,26 @@ and on the [documentation site](https://pysnmp.github.io/pysnmp/).
 
 ## How the pieces fit
 
-An SNMP engine speaks a binary protocol about objects named in MIB modules, so
-there are three layers and they are three repositories:
+**pysnmp** is the engine: message processing for v1, v2c and v3, USM
+authentication and privacy, VACM access control, the transport dispatcher, and
+the high-level API above all of it.
 
-- **pyasn1** encodes and decodes. BER on the wire, CER and DER where a
-  signature has to be reproducible.
-- **pysmi** reads ASN.1 MIB sources -- SMIv1, SMIv2 and the dialects real
-  vendors ship -- and renders them as pysnmp modules or JSON.
-- **pysnmp** is the engine: message processing, USM security, VACM access
-  control, the transport dispatcher, and the high-level API above all of it.
-- **mibs** is the archive the other two fall back to when a MIB module is not
-  on disk, served over HTTPS at
-  [pysnmp.github.io/mibs/asn1/](https://pysnmp.github.io/mibs/asn1/).
+**mibs** supplies the module definitions. It is a distribution rather than a
+package -- served over HTTPS, shipped as an archive, published as OCI images --
+and it is what turns `.1.3.6.1.2.1.2.2.1.8.1 = 2` into
+`IF-MIB::ifOperStatus.1 = down`. Optional: an engine starts without it, on the
+standard modules pysnmp ships.
 
-pysnmp ships the standard modules its engine resolves at start-up, so an
-engine starts with neither pysmi nor the archive present. Compiling vendor
-MIBs at run time is the extra: `pip install --pre 'pysnmplib[compile]'`.
+**pysmi** compiles the ASN.1 sources those modules are written in. pysnmp
+drives it; you call it directly, as `mibdump`, to compile MIBs outside an
+engine.
+
+**pyasn1** encodes and decodes -- BER on the wire, CER and DER where a
+representation has to be reproducible byte for byte. Normal use never reaches
+it by hand.
+
+[Resolving a name and translating a trap](https://pysnmp.github.io/mibs/), end
+to end, are on the site.
 
 ## How we work
 

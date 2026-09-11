@@ -54,11 +54,16 @@ class Project:
         Where the published documentation lives.
     distribution
         The name on PyPI, or ``None`` for a repository that publishes no
-        package -- the MIB archive is a website, not a distribution.
+        package.
+    install
+        What the Install cell should say, when a pip command is the wrong
+        answer. The MIB distribution is served, unpacked or mounted rather
+        than installed, and "--" undersells that.
     prerelease
-        Whether the maintained line is still a release candidate. When it is,
-        the install command needs ``--pre``: without it pip resolves the last
-        general release, which is not the version anything here describes.
+        Whether the maintained line is still a release candidate, which makes
+        the install command need ``--pre``. Nothing sets it today; it is kept
+        because this organization cuts release candidates routinely and the
+        table should say so while one is current.
     """
 
     name: str
@@ -66,6 +71,7 @@ class Project:
     summary: str
     docs: str
     distribution: str | None = None
+    install: str | None = None
     prerelease: bool = False
 
     @property
@@ -74,8 +80,11 @@ class Project:
         return f"https://github.com/{self.repo}"
 
     @property
-    def install(self) -> str:
-        """The pip command that installs the version this site documents."""
+    def install_cell(self) -> str:
+        """What the Install column says for this project."""
+        if self.install:
+            return self.install
+
         if not self.distribution:
             return "--"
 
@@ -86,7 +95,7 @@ class Project:
         """The project as one row of the generated Markdown table."""
         return (
             f"| [{self.name}]({self.url}) "
-            f"| {self.install} "
+            f"| {self.install_cell} "
             f"| [docs]({self.docs}) "
             f"| {self.summary} |"
         )
