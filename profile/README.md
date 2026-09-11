@@ -13,7 +13,7 @@ layers underneath; pysnmp reaches them for you.
 | Project | Install | Documentation | What it is |
 | --- | --- | --- | --- |
 | [pysnmp](https://github.com/pysnmp/pysnmp) | `pip install pysnmplib` | [docs](https://pysnmp.github.io/pysnmp/) | The engine. SNMP v1, v2c and v3 as manager, agent or proxy, on asyncio. |
-| [mibs](https://github.com/pysnmp/mibs) | live over HTTPS, or installed locally | [docs](https://pysnmp.github.io/mibs.html) | The MIB distribution -- what lets an engine say ifOperStatus rather than .1.8.1. |
+| [mibs](https://github.com/pysnmp/mibs) | live over HTTPS, or installed locally | [docs](https://pysnmp.github.io/mibs/) | The MIB distribution -- what lets an engine say ifOperStatus rather than .1.8.1. |
 | [pysmi](https://github.com/pysnmp/pysmi) | `pip install pysnmp-pysmi` | [docs](https://pysnmp.github.io/pysmi/) | The MIB compiler. ASN.1 sources into pysnmp modules or JSON; comes with the compile extra. |
 | [pyasn1](https://github.com/pysnmp/pyasn1) | `pip install pysnmp-pyasn1` | [docs](https://pysnmp.github.io/pyasn1/) | The codec. ASN.1 types with BER, CER and DER, underneath both of the above. |
 <!-- END PROJECTS -->

@@ -21,10 +21,10 @@ summary = "The engine. SNMP v1, v2c and v3 as manager, agent or proxy, on asynci
 name = "mibs"
 repo = "pysnmp/mibs"
 # A distribution, but not one pip resolves: use it live over HTTPS, or install
-# it locally from the archive or an OCI image. `install` overrides the pip
-# command the table would otherwise build from `distribution`.
+# it locally from a release archive or an OCI image. `install` overrides the
+# pip command the table would otherwise build from `distribution`.
 install = "live over HTTPS, or installed locally"
-docs = "https://pysnmp.github.io/mibs.html"
+docs = "https://pysnmp.github.io/mibs/"
 summary = "The MIB distribution -- what lets an engine say ifOperStatus rather than .1.8.1."
 
 [[project]]
