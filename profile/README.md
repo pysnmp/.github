@@ -78,8 +78,8 @@ MIBs at run time is the extra: `pip install --pre 'pysnmplib[compile]'`.
 
 ## How we work
 
-Every repository here is built and released the same way, so moving between
-them costs nothing:
+Every repository here is built the same way, so moving between them costs
+nothing:
 
 - [uv](https://docs.astral.sh/uv/) for environments and a committed lockfile;
   `uv run --locked --group dev pytest` is the whole setup.
@@ -88,8 +88,10 @@ them costs nothing:
 - [Conventional Commits](https://www.conventionalcommits.org/), checked on
   every pull request, because semantic-release computes the version and the
   release notes from them.
-- `main` carries the released line and `next` is where work integrates; a
-  release candidate is cut from `next`, a GA from `main`.
+- In the three that publish a package, `main` carries the released line and
+  `next` is where work integrates; a release candidate is cut from `next`, a
+  GA from `main`. This repository and the site publish nothing, so they have
+  only `main`.
 
 [CONTRIBUTING.md](https://github.com/pysnmp/.github/blob/main/CONTRIBUTING.md)
 has the details, and applies to every repository here.
