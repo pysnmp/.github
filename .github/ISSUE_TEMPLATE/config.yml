@@ -13,5 +13,5 @@ contact_links:
     url: https://github.com/pysnmp/.github/blob/main/SUPPORT.md
     about: What to include in a question, and what is in scope here.
   - name: MIB distribution
-    url: https://pysnmp.github.io/mibs.html
+    url: https://pysnmp.github.io/mibs/
     about: Looking for a MIB module? Check here before opening an issue.
