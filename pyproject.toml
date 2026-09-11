@@ -1,0 +1,90 @@
+# This repository ships no package. It carries the organization profile, the
+# default community health files GitHub falls back to for every repository
+# under github.com/pysnmp, and the one script that renders the first from
+# projects.toml.
+#
+# It is still laid out like pysnmp, pysmi and pyasn1 -- uv with a committed
+# lockfile, ruff, pytest, the same pre-commit hooks and the same commit
+# conventions -- because a contributor who has worked in one of those should
+# not have to learn a second way of doing things to fix a typo on the profile.
+[project]
+name = "pysnmp-org"
+version = "0.0.0"
+description = "Organization profile and default community health files for github.com/pysnmp"
+license = "BSD-2-Clause"
+requires-python = ">=3.11"
+readme = "README.md"
+# tomllib (3.11+) and argparse are all tools/render_profile.py needs, and that
+# is deliberate: nothing has to be installed to rebuild the profile.
+dependencies = []
+
+[project.urls]
+repository = "https://github.com/pysnmp/.github"
+homepage = "https://pysnmp.github.io/"
+
+# PEP 735, matching the sibling repositories: `uv run --locked --group dev`
+# works the same way in all four.
+[dependency-groups]
+dev = [
+    "pytest >=9.0.3,<10.0.0",
+    "ruff >=0.4.0,<1.0.0",
+]
+
+# Nothing is built or published from here.
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# tools/ is a directory of scripts rather than an installed package, so the
+# tests import render_profile by putting that directory on the path.
+pythonpath = ["tools"]
+
+# ---------------------------------------------------------------------------
+# Linting / formatting
+# ---------------------------------------------------------------------------
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+# The rule set pysnmp, pysmi and pyasn1 share, minus the rules that only mean
+# something for a protocol library (the flake8-bandit SNMP and weak-crypto
+# exemptions, and the generated-MIB carve-outs).
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "UP",     # pyupgrade
+    "B",      # flake8-bugbear
+    "S",      # flake8-bandit (security)
+    "SIM",    # flake8-simplify
+    "BLE",    # flake8-blind-except
+    "G",      # flake8-logging-format
+    "LOG",    # flake8-logging
+    "FLY",    # flynt
+    "C4",     # flake8-comprehensions
+    "RSE",    # flake8-raise
+    "RUF",    # ruff-specific rules
+    "PL",     # pylint
+    "TRY",    # tryceratops
+    "D",      # pydocstyle
+]
+ignore = [
+    "E501",     # line-too-long -- ruff format decides where lines break
+    "SIM108",   # if-else-block-instead-of-if-exp -- readability preference
+    "TRY003",   # raise-vanilla-args -- message text is part of the error
+    "D401",     # non-imperative-mood -- as in pysnmp, property summaries are
+                # noun phrases naming what you get back
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+# A test's docstring says what the test establishes, which is not an
+# imperative summary of a public API; S101 is what pytest is made of. The same
+# exemption the sibling repositories give their tests.
+"tests/**" = ["S101", "D", "PL", "TRY", "BLE", "RUF"]

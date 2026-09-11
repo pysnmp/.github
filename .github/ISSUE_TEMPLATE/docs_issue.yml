@@ -1,0 +1,29 @@
+name: Documentation issue
+description: Something on the documentation site is wrong, missing or out of date.
+labels: ["documentation"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: The URL of the page, or the path of the file in the repository.
+      placeholder: https://pysnmp.github.io/pysnmp/stable/docs/api-reference.html
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong with it
+      description: >
+        Quote the passage if it is wrong, or say what you went looking for and
+        did not find. "The example does not run" is a bug report -- use the bug
+        template for that, and include the traceback.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested wording
+      description: Optional, and very welcome. A pull request is even more welcome.

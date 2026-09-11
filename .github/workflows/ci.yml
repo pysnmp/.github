@@ -1,0 +1,80 @@
+name: CI
+
+# There is no package to build and nothing to release here, so this is the
+# short version of the library repositories' workflow: the same hooks, the same
+# lint, and the check that the org profile still matches projects.toml.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+
+permissions:
+  contents: read
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-3|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      - name: Run pre-commit
+        run: |
+          python -m pip install pre-commit
+          pre-commit run --show-diff-on-failure --color=always --all-files
+
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Install UV
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - name: Run Ruff
+        run: uv run --locked --group dev ruff check .
+      - name: Check formatting
+        run: uv run --locked --group dev ruff format --check .
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Install UV
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+      - name: Run tests
+        run: uv run --locked --group dev pytest
+
+  profile:
+    name: profile is rendered
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      # No dependencies: the renderer is stdlib only, on purpose, so this job
+      # is the same check a contributor can run with nothing installed.
+      - name: Check profile/README.md against projects.toml
+        run: python tools/render_profile.py --check

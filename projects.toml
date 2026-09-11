@@ -1,0 +1,36 @@
+# What this organization maintains, and the single place it is written down.
+#
+# tools/render_profile.py turns this into the project table in
+# profile/README.md -- the page GitHub shows on github.com/pysnmp -- and CI
+# runs it with --check, so a project added here but not rendered fails the
+# build rather than leaving the org profile a version behind.
+#
+# Order is the order the table lists them: the engine first, then what it is
+# built out of, then the data it reads.
+
+[[project]]
+name = "pysnmp"
+repo = "pysnmp/pysnmp"
+distribution = "pysnmplib"
+docs = "https://pysnmp.github.io/pysnmp/"
+summary = "SNMP v1/v2c/v3 engine -- manager, agent and proxy, asyncio throughout."
+
+[[project]]
+name = "pysmi"
+repo = "pysnmp/pysmi"
+distribution = "pysnmp-pysmi"
+docs = "https://pysnmp.github.io/pysmi/"
+summary = "MIB compiler: ASN.1 SMIv1/SMIv2 sources into pysnmp modules or JSON."
+
+[[project]]
+name = "pyasn1"
+repo = "pysnmp/pyasn1"
+distribution = "pysnmp-pyasn1"
+docs = "https://pysnmp.github.io/pyasn1/"
+summary = "ASN.1 types and BER/CER/DER codecs -- what the other two are built on."
+
+[[project]]
+name = "mibs"
+repo = "pysnmp/mibs"
+docs = "https://pysnmp.github.io/mibs/asn1/"
+summary = "The MIB archive pysmi and pysnmp fetch from when a module is not on disk."
