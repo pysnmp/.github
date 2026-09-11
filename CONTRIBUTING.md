@@ -73,11 +73,16 @@ RFC 3414, not chosen -- and each of those carries a comment saying so.
 
 ## Commit messages
 
-Messages follow [Conventional Commits](https://www.conventionalcommits.org/).
-This is enforced, and not as a matter of taste: semantic-release computes the
-next version number and writes the release notes from the commit history, so a
-message it cannot parse becomes a change that ships in no release note and
-bumps no version.
+Messages follow [Conventional Commits](https://www.conventionalcommits.org/),
+and the format is enforced in every repository here.
+
+In the three that publish a package it is load-bearing: semantic-release
+computes the next version number and writes the release notes from the commit
+history, so a message it cannot parse becomes a change that ships in no release
+note and bumps no version. In this repository and on the site nothing reads the
+history that way -- no version is computed and no notes are generated -- and the
+convention is kept anyway, so that the habit a contributor picks up fixing a
+typo here is the one they bring to pysnmp.
 
 ```
 <type>(<optional scope>): <subject>
@@ -88,7 +93,7 @@ bumps no version.
 ```
 
 The accepted types are `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`,
-`refactor`, `revert`, `style` and `test`. Of these:
+`refactor`, `revert`, `style` and `test`. Where a release is cut from them:
 
 - `feat` cuts a minor release, `fix` a patch release.
 - A `BREAKING CHANGE:` footer, or a `!` after the type, cuts a major release.
@@ -120,7 +125,8 @@ long-lived branch to hold. Open pull requests against `main` there.
 
 Version numbers are never edited by hand. semantic-release writes them into
 `pyproject.toml`, the package's `__init__.py` and `CHANGELOG.md` as part of the
-release commit.
+release commit. (Still the three package repositories; the other two carry a
+`version` of `0.0.0` that nothing reads.)
 
 ## Tests
 
