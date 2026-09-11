@@ -1,0 +1,28 @@
+name: Question
+description: How do I do something with these libraries?
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a look at [the documentation](https://pysnmp.github.io/) and the
+        `examples/` directory in the repository first -- most usage questions
+        are answered by a runnable script already in the tree.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: What are you trying to do
+      description: >
+        Describe the goal, not just the call you are stuck on. Include the code
+        you have so far, as text.
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: pysnmplib 6.0.0rc11, Python 3.12.4
+    validations:
+      required: true

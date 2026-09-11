@@ -1,0 +1,24 @@
+version: 2
+
+# This repository ships nothing, so nothing here is a released dependency and
+# no bump needs a version. That is the difference from the library repositories,
+# where the commit scope decides whether a release is cut.
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "ci(actions)"
+
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"

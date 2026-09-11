@@ -1,0 +1,43 @@
+# The same hooks the library repositories install, so `pre-commit install` in
+# any pysnmp checkout does the same thing. mypy is not here: this repository has
+# one script and no annotations to check against dependencies it does not have.
+default_install_hook_types: [pre-commit, commit-msg]
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.5
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      # Most of what is here is YAML and Markdown that GitHub parses rather
+      # than a person: a template with a tab in it silently stops offering
+      # itself, and the failure is invisible until someone opens a new issue.
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  # The check .github/workflows/commit-conventions.yml runs, at the point where
+  # the message is written rather than after it exists.
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+    rev: v9.26.0
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]
+        additional_dependencies: ["@commitlint/config-conventional@21"]
+
+  - repo: local
+    hooks:
+      # projects.toml is the source; profile/README.md is the artifact. Catch
+      # the two drifting apart before the commit, not on the org front page.
+      - id: render-profile
+        name: profile/README.md is rendered from projects.toml
+        entry: python tools/render_profile.py --check
+        language: system
+        pass_filenames: false
+        files: ^(projects\.toml|profile/README\.md|tools/render_profile\.py)$

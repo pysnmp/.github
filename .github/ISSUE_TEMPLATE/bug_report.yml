@@ -1,0 +1,85 @@
+name: Bug report
+description: Something in one of the pysnmp libraries does not behave as documented.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not report a security vulnerability here. Use
+        [the security policy](https://github.com/pysnmp/.github/blob/main/SECURITY.md)
+        instead, so the fix can ship before the problem is public.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what you got instead.
+      placeholder: |
+        Fetching sysDescr.0 from a device over SNMPv3 with SHA-256 auth returns
+        wrongDigest. The same credentials work with `snmpget`.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How to reproduce it
+      description: >
+        The smallest script that shows the problem, as text rather than a
+        screenshot. If it needs a device or an agent to talk to, say which --
+        a vendor and model, or the net-snmp version and its configuration.
+      render: python
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: >
+        The traceback in full, or the packet capture, or both. Do not trim the
+        middle of a traceback; that is usually where the answer is.
+
+
+        Redact before you paste. This issue is public, and SNMPv1 and SNMPv2c
+        put the community string on the wire in cleartext -- a capture of them
+        is a capture of your password. Take out community strings, USM
+        passphrases, device addresses and anything the payload says about your
+        network. Decoded and sanitised output is more use to us than a raw
+        capture anyway. If you cannot redact it and still show the bug, say so
+        and we will find a private channel.
+      render: shell
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Output of `pip show pysnmplib pysnmp-pysmi pysnmp-pyasn1` (whichever you have installed).
+      placeholder: pysnmplib 6.0.0rc11, pysnmp-pyasn1 2.0.2, Python 3.12.4, Ubuntu 24.04
+    validations:
+      required: true
+
+  - type: dropdown
+    id: project
+    attributes:
+      label: Which project
+      options:
+        - pysnmp (the SNMP engine)
+        - pysmi (the MIB compiler)
+        - pyasn1 (ASN.1 types and codecs)
+        - mibs (the MIB archive)
+        - Not sure
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched the existing issues and this is not a duplicate.
+          required: true
+        - label: I am using a currently released version, not a fork or an old branch.
+          required: true
